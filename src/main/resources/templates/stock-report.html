@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Stock Report</title>
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- FontAwesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+  <style>
+    /* Layout fix */
+    .main-content {
+      margin-left: 220px; /* Sidebar width + a little margin */
+      padding: 20px;
+      padding-left: 40px;
+    }
+    .sidebar {
+      width: 220px;
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100vh;
+      background-color: #f8f9fa;
+      padding-top: 20px;
+      border-right: 1px solid #dee2e6;
+      overflow-y: auto;
+    }
+
+    /* Custom select and button styling */
+    .custom-select {
+      border-radius: 1rem;
+      padding: 0.75rem 1rem;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.08);
+      border: 1px solid #ced4da;
+      background-color: #f8f9fa;
+      transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .custom-select:focus {
+      border-color: #0d6efd;
+      box-shadow: 0 0 0 0.2rem rgba(13, 110, 253, 0.25);
+    }
+
+    .btn-custom {
+      border-radius: 25px;
+      padding: 0.5rem 1.2rem;
+      transition: all 0.3s ease;
+      font-weight: 500;
+    }
+
+    .btn-custom:hover {
+      opacity: 0.9;
+      transform: scale(1.03);
+    }
+
+    table tbody tr:hover {
+      background-color: #f1f1f1;
+      cursor: pointer;
+      transition: background-color 0.2s ease-in-out;
+    }
+
+    .form-floating label {
+      padding-left: 1rem;
+    }
+  </style>
+</head>
+<body>
+
+<div class="sidebar">
+  <header th:replace="~{fragments/sidebar::sidebar}"></header>
+</div>
+
+<div class="main-content">
+  <div class="container-fluid">
+
+    <!-- Centered Title -->
+    <h2 class="mb-5 text-primary text-center fw-bold">📦 Stock Report</h2>
+
+    <!-- Form Section -->
+    <form method="get" action="/stock-report" class="row justify-content-center align-items-center g-3 mb-4">
+      <div class="col-md-4">
+        <div class="form-floating">
+          <select name="departmentId" onchange="this.form.submit()" class="form-select custom-select" id="departmentId">
+            <option value="">-- Select Department --</option>
+            <th:block th:each="dept : ${departments}">
+              <option th:value="${dept.id}" th:text="${dept.name}" th:selected="${dept.id} == ${selectedDept}"></option>
+            </th:block>
+          </select>
+          <label for="departmentId">Select Department</label>
+        </div>
+      </div>
+
+      <div class="col-md-auto">
+        <button type="submit" class="btn btn-primary btn-custom">
+          <i class="fas fa-filter me-1"></i> Filter
+        </button>
+      </div>
+
+      <div class="col-md-auto">
+        <a class="btn btn-success btn-custom me-2" th:href="@{/stock-report/export/excel(departmentId=${param.departmentId})}">
+          <i class="fas fa-file-excel me-1"></i> Export Excel
+        </a>
+        <a class="btn btn-danger btn-custom" th:href="@{/stock-report/export/pdf(departmentId=${param.departmentId})}">
+          <i class="fas fa-file-pdf me-1"></i> Export PDF
+        </a>
+      </div>
+    </form>
+
+    <!-- Table Section -->
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped align-middle text-center">
+        <thead class="table-dark">
+          <tr>
+            <th>Name</th>
+            <th>Quantity</th>
+            <th>Unit Price</th>
+            <th>Department</th>
+            <th>User Email</th>
+            <th>Destination</th>
+            <th>Approved At</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="item : ${stockList}" th:if="${item.transactionType.name() == 'REMOVE'}">
+            <td th:text="${item.inventoryItem.name}"></td>
+            <td th:text="${item.quantity}"></td>
+            <td th:text="${item.inventoryItem.unitPrice}"></td>
+            <td th:text="${item.user != null && item.user.department != null ? item.user.department.name : 'N/A'}"></td>
+            <td th:text="${item.user != null ? item.user.email : 'N/A'}"></td>
+            <td th:text="${item.destination}"></td>
+            <td th:text="${#temporals.format(item.transactionDate, 'yyyy-MM-dd HH:mm')}"></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+  </div>
+</div>
+
+<!-- Bootstrap Bundle JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>

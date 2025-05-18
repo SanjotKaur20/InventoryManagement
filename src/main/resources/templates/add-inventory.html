@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Inventory</title>
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+    <style>
+      /* Add rounded corners and background color to the form */
+      .form-container {
+        background-color: #f0f9ff; /* Light blue background for aesthetic */
+        border-radius: 1.5rem; /* Rounded corners */
+        padding: 1rem 1.5rem; /* Decreased padding for height reduction */
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1); /* Light shadow for depth */
+        max-width: 450px; /* Maximum width for form */
+        margin: auto; /* Center form */
+      }
+
+      .btn-success {
+        background-color: #5cb85c; /* Light green color for the save button */
+        border: none;
+      }
+
+      .btn-secondary {
+        background-color: #6c757d;
+      }
+
+      /* Customize form elements to have rounded corners */
+      .form-control {
+        border-radius: 1rem; /* Rounded corners for inputs */
+      }
+
+      /* Adjust button padding */
+      .btn {
+        padding: 0.5rem 1.5rem; /* Decreased padding for the buttons */
+        border-radius: 2rem; /* Rounded buttons */
+      }
+
+      /* Reduce margin between form elements */
+      .form-group {
+        margin-bottom: 0.8rem; /* Reduced margin between form fields */
+      }
+
+      h2 {
+        margin-bottom: 1.2rem; /* Reduced margin below the heading */
+      }
+    </style>
+  </head>
+  <body>
+    <div class="row">
+        <div class="col-2">
+            <header th:replace="~{fragments/sidebar::sidebar}"></header>
+    
+        </div>
+        <div class="col-10">
+            <div class="container mt-5">
+                <div class="form-container">
+                  <h2 class="text-center fw-bold">Add Inventory Item</h2>
+                  <form
+                    th:action="@{/inventory/save}"
+                    th:object="${inventoryItem}"
+                    method="post"
+                  >
+                  <input type="hidden" th:field="*{id}" />  <!-- ✅ Ensures ID is passed when editing -->
+          
+                    <div class="form-group">
+                      <label for="name" style="font-weight: bold">Item Name</label>
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="name"
+                        th:field="*{name}"
+                        required
+                      />
+                    </div>
+          
+                    <div class="form-group">
+                      <!-- <label for="categoryId" style="font-weight: bold;">Category</label>
+                              <select class="form-control" id="categoryId" name="categoryId" required>
+                                  <option value="">Select Category</option>
+                                  <option th:each="cat : ${categories}" th:value="${cat.id}" th:text="${cat.name}"></option>
+                              </select> -->
+                      <label for="category">Category:</label>
+                      <select id="category" name="categoryId" class="form-control">
+                        <option
+                          th:each="cat : ${categories}"
+                          th:value="${cat.id}"
+                          th:selected="${cat.id == selectedCategoryId}"
+                          th:text="${cat.name}"
+                        ></option>
+                      </select>
+                    </div>
+          
+                    <div class="form-group">
+                      <label for="quantity" style="font-weight: bold">Quantity</label>
+                      <!-- <input
+                        type="number"
+                        class="form-control"
+                        id="quantity"
+                        th:field="*{quantity}"
+                        required
+                      /> -->
+                      <input type="number"                         id="quantity"
+                        th:field="*{quantity}"
+ name="quantity" class="form-control" min="1" required 
+                    oninvalid="this.setCustomValidity('Quantity must be a positive number')"
+                    oninput="this.setCustomValidity('')"/>
+                             </div>
+
+          
+                    <div class="form-group">
+                      <label for="unitPrice" style="font-weight: bold">Unit Price</label>
+                      <input
+                        type="number"
+                        class="form-control"
+                        id="unitPrice"
+                        th:field="*{unitPrice}"
+                         min="1" 
+                    oninvalid="this.setCustomValidity('Quantity must be a positive number')"
+                    oninput="this.setCustomValidity('')"
+                        required
+                      />
+                    </div>
+          
+                    <div class="form-group">
+                      <label for="status" style="font-weight: bold">Status</label>
+                      <select class="form-control" id="status" th:field="*{status}">
+                        <option
+                          th:each="s : ${T(com.sanjot.inventory.entity.InventoryItem.Status).values()}"
+                          th:value="${s}"
+                          th:text="${s}"
+                        ></option>
+                      </select>
+                    </div>
+          
+                    <div class="text-center">
+                      <button
+                        type="submit"
+                        style="font-weight: bold"
+                        class="btn btn-success"
+                      >
+                        Save Inventory
+                      </button>
+                      <a
+                        href="/inventory"
+                        style="font-weight: bold"
+                        class="btn btn-secondary"
+                        >Cancel</a
+                      >
+                    </div>
+                  </form>
+                </div>
+              </div>
+          
+
+        </div>
+    
+    </div>
+
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

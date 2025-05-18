@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full-Screen Carousel</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    
+
+    <style>
+        /* Custom navbar styles */
+
+        /* Full-screen carousel */
+        .carousel, .carousel-inner, .carousel-item {
+            height: 100vh; /* Full viewport height */
+        }
+
+        /* Ensures images cover the full screen without distortion */
+        .carousel-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Dark overlay for better text contrast */
+        .carousel-caption {
+            position: absolute;
+            bottom: 20%;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        /* Larger and stylish captions */
+        .carousel-caption h5 {
+            font-size: 2rem;
+            font-weight: bold;
+        }
+
+        .carousel-caption p {
+            font-size: 1.2rem;
+        }
+        .feature-box {
+            text-align: center;
+            padding: 30px;
+            border-radius: 10px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: #f8f9fa;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%; /* Ensures all boxes have equal height */
+        }
+
+        .feature-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 40px;
+            color: #007bff;
+            margin-bottom: 15px;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .feature-desc {
+            font-size: 16px;
+            color: #666;
+        }
+        /* Facilities hover effect */
+        .container .row img:hover {
+            transform: scale(1.03);
+            transition: transform 0.3s ease-in-out;
+        }
+        .container .row h3:hover {
+            color: #0056b3;
+            transition: color 0.3s ease-in-out;
+        }
+
+    </style>
+</head>
+<body>
+<div class="row " >
+    <header th:replace="~{fragments/navbar::navbar}"></header>
+
+</div>
+
+
+    <div id="carouselExampleDark" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="1" aria-label="Slide 2"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="3" aria-label="Slide 4"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="4" aria-label="Slide 5"></button>
+            <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="5" aria-label="Slide 6"></button>
+        </div>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active" data-bs-interval="5000">
+                <img th:src="@{/image/bdLab.jpeg}" class="d-block w-100" alt="Lab 1">
+                <div class="carousel-caption">
+                    <h5>Modern Laboratory</h5>
+                    <p>Explore state-of-the-art lab facilities.</p>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="5000">
+                <img th:src="@{/image/lab2.webp}" class="d-block w-100" alt="Lab 2">
+                <div class="carousel-caption">
+                    <h5>Advanced Equipment</h5>
+                    <p>Cutting-edge technology at your fingertips.</p>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="5000">
+                <img th:src="@{/image/lab3.jpeg}" class="d-block w-100" alt="Lab 3">
+                <div class="carousel-caption">
+                    <h5>Research and Innovation</h5>
+                    <p>Pushing the boundaries of science.</p>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="5000">
+                <img th:src="@{/image/lab4.jpeg}" class="d-block w-100" alt="Lab 4">
+                <div class="carousel-caption">
+                    <h5>Team Collaboration</h5>
+                    <p>Working together for a better future.</p>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="5000">
+                <img th:src="@{/image/lab5.avif}" class="d-block w-100" alt="Lab 5">
+                <div class="carousel-caption">
+                    <h5>Innovation Hub</h5>
+                    <p>Where ideas come to life.</p>
+                </div>
+            </div>
+            <div class="carousel-item" data-bs-interval="5000">
+                <img th:src="@{/image/lab5.jpeg}" class="d-block w-100" alt="Lab 6">
+                <div class="carousel-caption">
+                    <h5>Scientific Excellence</h5>
+                    <p>Striving for excellence in every experiment.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Carousel Controls -->
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+    <div class="container my-5">
+        <h2 class="text-center mb-4"> Features</h2>
+        <div class="row g-4">
+            <!-- Feature 1 -->
+            <div class="col-md-4 d-flex">
+                <div class="feature-box p-4 w-100">
+                    <i class="fas fa-box-open feature-icon"></i>
+                    <h5 class="feature-title">Stock Management</h5>
+                    <p class="feature-desc">Keep track of inventory levels and avoid shortages.</p>
+                </div>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="col-md-4 d-flex">
+                <div class="feature-box p-4 w-100">
+                    <i class="fas fa-chart-line feature-icon"></i>
+                    <h5 class="feature-title">Real-Time Tracking</h5>
+                    <p class="feature-desc">Monitor inventory in real-time with advanced analytics.</p>
+                </div>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="col-md-4 d-flex">
+                <div class="feature-box p-4 w-100">
+                    <i class="fas fa-users feature-icon"></i>
+                    <h5 class="feature-title">User Access Control</h5>
+                    <p class="feature-desc">Assign roles and permissions to manage stock efficiently.</p>
+                </div>
+            </div>
+
+            <!-- Feature 4 -->
+            <div class="col-md-4 d-flex">
+                <div class="feature-box p-4 w-100">
+                    <i class="fas fa-file-invoice feature-icon"></i>
+                    <h5 class="feature-title">Automated Reports</h5>
+                    <p class="feature-desc">Generate reports for stock audits and transactions.</p>
+                </div>
+            </div>
+
+            <!-- Feature 5 -->
+            <div class="col-md-4 d-flex">
+                <div class="feature-box p-4 w-100">
+                    <i class="fas fa-exchange-alt feature-icon"></i>
+                    <h5 class="feature-title">Easy Transfers</h5>
+                    <p class="feature-desc">Transfer stock between departments seamlessly.</p>
+                </div>
+            </div>
+
+            <!-- Feature 6 -->
+            <div class="col-md-4 d-flex">
+                <div class="feature-box p-4 w-100">
+                    <i class="fas fa-bell feature-icon"></i>
+                    <h5 class="feature-title">Low Stock Alerts</h5>
+                    <p class="feature-desc">Get notified when stock reaches a low threshold.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <!-- Facilities Section -->
+    <div class="container my-5">
+        <h2 class="text-center mb-5" style="font-weight: 700; font-size: 2.5rem; color: #343a40;">Our Facilities</h2>
+    
+        <!-- Facility 1 -->
+        <div class="row align-items-center g-5 mb-5">
+            <div class="col-md-6">
+                <img th:src="@{/image/wires.avif}" class="img-fluid rounded-4 shadow-sm w-100" style="height: 260px; object-fit: cover;" alt="High-Speed Internet" width="100px">
+            </div>
+            <div class="col-md-6">
+                <h3 class="mb-3" style="color: #007bff; font-weight: 600;">High-Speed Internet</h3>
+                <p style="font-size: 1.1rem; color: #555;">
+                    At Amritsar Group of Colleges (AGC), students benefit from a high-speed, campus-wide internet facility that ensures seamless connectivity for academic, research, and personal use. The entire campus, including classrooms, laboratories, hostels, library, and common areas, is equipped with 24/7 Wi-Fi access, allowing students and faculty to stay connected at all times. With a dedicated high-bandwidth leased line, AGC supports smooth online learning, research activities, video conferencing, and access to digital resources without interruption.The network is secured with advanced firewalls and authentication systems to provide a safe and reliable browsing experience, making AGC a truly digitally enabled campus that empowers students to thrive in a technology-driven world.
+                </p>
+            </div>
+        </div>
+    
+        <!-- Facility 2 -->
+        <div class="row align-items-center g-5 mb-5 flex-md-row-reverse">
+            <div class="col-md-6">
+                <img th:src="@{/image/e claassrom.webp}" class="img-fluid rounded-4 shadow-sm w-100" style="height: 260px; object-fit: cover;" alt="Spacious Classrooms" width="300px">
+            </div>
+            <div class="col-md-6">
+                <h3 class="mb-3" style="color: #007bff; font-weight: 600;">E-Classrooms</h3>
+                <p style="font-size: 1.1rem; color: #555;">
+                    The E-Classrooms at Amritsar Group of Colleges (AGC) are designed to integrate technology with traditional learning, creating an interactive and engaging academic environment. Equipped with smart boards, digital projectors, high-speed internet, and audio-visual aids, these classrooms enhance the teaching-learning process by making lectures more dynamic and accessible. Faculty members utilize multimedia presentations, virtual simulations, and online resources to deliver complex concepts with clarity. The e-classrooms also support live streaming, recorded lectures, and remote learning, allowing students to stay connected with their coursework anytime, anywhere. 
+                </p>
+            </div>
+        </div>
+    
+        <!-- Facility 3 -->
+        <div class="row align-items-center g-5 mb-5">
+            <div class="col-md-6">
+                <img th:src="@{/image/binrary.webp}" class="img-fluid rounded-4 shadow-sm w-100" style="height: 280px; object-fit: cover;" alt="Library Access">
+            </div>
+            <div class="col-md-6">
+                <h3 class="mb-3" style="color: #007bff; font-weight: 600;">Library Access</h3>
+                <p style="font-size: 1.1rem; color: #555;">
+                    The library at Amritsar Group of Colleges (AGC) serves as a cornerstone of academic excellence, offering a vast collection of books, journals, research papers, and digital resources across various disciplines. Designed to provide a peaceful and productive environment, the library features spacious reading areas, high-speed internet access, and digital study zones to support both individual and group learning. With access to online databases, e-books, and scholarly articles, students and faculty can stay updated with the latest developments in their fields. 
+                </p>
+            </div>
+        </div>
+    
+        <!-- Facility 4 -->
+        <div class="row align-items-center g-5 mb-5 flex-md-row-reverse">
+            <div class="col-md-6">
+                <img th:src="@{/image/cafeteria.webp}" class="img-fluid rounded-4 shadow-sm w-100" style="height: 300px; object-fit: cover;" alt="Cafeteria">
+            </div>
+            <div class="col-md-6">
+                <h3 class="mb-3" style="color: #007bff; font-weight: 600;">Cafeteria</h3>
+                <p style="font-size: 1.1rem; color: #555;">
+                    The cafeteria at Amritsar Group of Colleges (AGC) offers a vibrant and hygienic space where students, faculty, and staff can relax and enjoy a variety of delicious and nutritious meals. With a menu that includes a range of affordable and healthy food options, from traditional Indian cuisine to quick snacks and beverages, the cafeteria caters to diverse tastes while maintaining high standards of cleanliness and quality. The spacious seating area provides a comfortable atmosphere for students to unwind between classes, hold informal discussions, or simply recharge during a busy day.
+                </p>
+            </div>
+        </div>
+    </div>
+    
+    
+    <style>
+        /* Facilities hover effect */
+        .container .row img:hover {
+            transform: scale(1.03);
+            transition: transform 0.3s ease-in-out;
+        }
+        .container .row h3:hover {
+            color: #0056b3;
+            transition: color 0.3s ease-in-out;
+        }
+    </style>
+    
+
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+
+</body>
+
+
+
+<!-- Footer -->
+<footer class="bg-dark text-light pt-5 pb-4 mt-5">
+    <div class="container">
+        <div class="row">
+
+            <!-- About -->
+            <div class="col-md-4 mb-4">
+                <h5 class="footer-title">About AGC</h5>
+                <p style="font-size: 1rem; color: #ccc;">
+                    Amritsar Group of Colleges (AGC) is committed to providing world-class education with modern infrastructure, innovative research, and industry-focused learning.
+                </p>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="col-md-4 mb-4">
+                <h5 class="footer-title">Quick Links</h5>
+                <ul class="list-unstyled footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">About Us</a></li>
+                </ul>
+            </div>
+
+            <!-- Contact -->
+            <div class="col-md-4 mb-4">
+                <h5 class="footer-title">Contact Us</h5>
+                <p style="font-size: 1rem; color: #ccc;">
+                    12 KM Stone, Amritsar-Jalandhar GT Road,<br>
+                    Amritsar, Punjab, India.<br>
+                    Phone: <a href="tel:+911234567890" class="footer-contact">+91-12345-67890</a><br>
+                    Email: <a href="mailto:info@agcamritsar.in" class="footer-contact">info@agcamritsar.in</a>
+                </p>
+            </div>
+
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-center mt-4 pt-3 border-top border-secondary">
+            <p style="font-size: 0.9rem; color: #aaa;">© 2025 Amritsar Group of Colleges. All Rights Reserved.</p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    footer {
+        font-family: 'Poppins', sans-serif;
+    }
+
+    .footer-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        position: relative;
+        display: inline-block;
+        color: #fff;
+    }
+
+    .footer-title::after {
+        content: '';
+        position: absolute;
+        width: 50%;
+        height: 2px;
+        background-color: #007bff;
+        bottom: -5px;
+        left: 0;
+    }
+
+    .footer-links li {
+        margin-bottom: 0.5rem;
+    }
+
+    .footer-links a {
+        font-size: 1rem;
+        color: #ccc;
+        text-decoration: none;
+        position: relative;
+        display: inline-block;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .footer-links a::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 1px;
+        display: block;
+        background: #007bff;
+        transition: width 0.3s;
+        left: 0;
+        bottom: -3px;
+    }
+
+    .footer-links a:hover::after {
+        width: 100%;
+    }
+
+    .footer-links a:hover {
+        color: #fff;
+    }
+
+    .footer-contact {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.3s ease-in-out;
+    }
+
+    .footer-contact:hover {
+        color: #007bff;
+    }
+</style>
+
+
+
+
+
+
+
+
+</html>

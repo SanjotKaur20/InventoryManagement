@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Pending Inventory Requests</title>
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<body>
+    
+<div class="row">
+    <div class="col-2">
+        <header th:replace="~{fragments/sidebar::sidebar}"></header>
+    </div>
+    <div class="col-9">
+        <div class="container m-5">
+            <!-- Alerts -->
+            <div th:if="${param.error}" class="alert alert-danger">
+                Cannot approve: Not enough inventory in stock!
+            </div>
+            <div th:if="${param.approved}" class="alert alert-success">
+                Transaction approved successfully.
+            </div>
+            <div th:if="${param.rejected}" class="alert alert-warning">
+                Transaction rejected.
+            </div>
+
+            <h2 class="text-center mb-4">Pending Inventory Requests</h2>
+
+            <!-- Table -->
+            <table class="table table-bordered table-hover shadow-sm">
+                <thead class="table-dark">
+                <tr>
+                    <th>Item</th>
+                    <th>Quantity</th>
+                    <th>Destination</th>
+                    <th>Requested By</th>
+                    <th>Requested At</th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="request : ${requests}">
+                    <td th:text="${request.inventoryItem?.name ?: 'N/A'}"></td>
+                    <td th:text="${request.quantity}"></td>
+                    <td th:text="${request.destination}"></td>
+                    <td th:text="${request.user?.email ?: 'N/A'}"></td>
+                    <td th:text="${#temporals.format(request.transactionDate, 'dd-MM-yyyy HH:mm')}"></td>
+                    <td>
+                        <span th:if="${request.status == 'APPROVED'}" class="badge bg-success">Approved</span>
+                        <span th:if="${request.status == 'REJECTED'}" class="badge bg-danger">Rejected</span>
+                        <span th:if="${request.status.name() == 'PENDING'}" class="badge bg-warning text-dark">Pending</span>
+                    </td>
+                    <td>
+                        <!--<form th:if="${request.status.name() == 'PENDING'}"
+                              th:action="@{/transactions/approve/{id}(id=${request.id})}"
+                              method="post" class="d-inline approve-form"
+                              th:attr="data-requested=${request.quantity}, data-available=${request.inventoryItem.quantity}">
+                            <button type="submit" class="btn btn-success btn-sm">Approve</button>
+                        </form>
+                        <form th:if="${request.status.name() == 'PENDING'}"
+                              th:action="@{/transactions/reject/{id}(id=${request.id})}"
+                              method="post" class="d-inline">
+                            <button type="submit" class="btn btn-danger btn-sm">Reject</button>
+                        </form> -->
+                        <a th:href="@{/transactions/details/{id}(id=${request.id})}" class="btn btn-info btn-sm">
+                            <i class="fas fa-eye"></i> View
+                        </a>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<!-- <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const approveForms = document.querySelectorAll(".approve-form");
+        approveForms.forEach(form => {
+            form.addEventListener("submit", function (e) {
+                const requested = parseInt(form.getAttribute("data-requested"), 10);
+                const available = parseInt(form.getAttribute("data-available"), 10);
+                if (requested > available) {
+                    e.preventDefault();
+                    alert(`❌ Cannot approve:\nRequested quantity (${requested}) exceeds available stock (${available}).`);
+                }
+            });
+        });
+    });
+</script> -->
+</body>
+</html>

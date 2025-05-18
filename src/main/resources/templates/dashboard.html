@@ -1,0 +1,115 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        .main-content {
+            margin-left: 25px; /* For space for the sidebar */
+            padding: 20px;
+            background-color: #f7f7f7;
+        }
+
+        .card-custom {
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .card-custom:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            background-color: #c96284; 
+        }
+
+        .stats-header {
+            display: flex;
+            justify-content: space-around;
+            margin-bottom: 20px;
+        }
+
+        .stats-header .card-custom {
+            text-align: center;
+            padding: 20px;
+            width: 20%;
+            background-color: #fff;
+        }
+
+        .stats-header .card-custom .icon {
+            font-size: 30px;
+            margin-bottom: 10px;
+        }
+
+        .store-stats {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .store-stats h5 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .store-stats .row .col {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .store-stats .row .col i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+        
+        body {
+            /* width: 100%;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center; */
+            background: linear-gradient(to right, #FDFBFB, #EBEDEE 70%);
+        }
+
+        .gradient-text {
+            text-transform: uppercase;
+            background: linear-gradient(to right, #d03038 0%, #21769e 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-family: 'Poppins', sans-serif;
+            font-size: 5.5rem;
+            font-weight: bold;
+            margin-top:100px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="row">
+    <div class="col-2">
+        <header th:replace="~{fragments/sidebar::sidebar}"></header>
+
+    </div>
+    <div class="col-2"></div>
+    <div class="col-8">
+            <h2 class="gradient-text "  sec:authorize="hasRole('ADMIN')">Welcome Admin</h2>
+            <h2 class="gradient-text" sec:authorize="hasRole('STAFF')">Welcome to Inventory</h2>
+            <p style="color: #21769e;">Manage inventory, track issued items, and monitor department usage from here.</p>
+    
+    
+    </div>
+    <div th:if="${pendingCount > 0}" class="alert alert-warning mt-3">
+        🔔 <strong th:text="'You have ' + ${pendingCount} + ' pending inventory request(s).'"></strong>
+        <a href="/inventory/inventory-request" class="btn btn-sm btn-primary ms-2">Review Now</a>
+    </div>
+    
+    </div>
+</div>
+</body>
+</html>

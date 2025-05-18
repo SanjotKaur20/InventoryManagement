@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Category</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+            margin: 0;
+        }
+
+        .main-wrapper {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-card {
+            background: #fefcf8;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            padding: 4rem;
+            width: 100%;
+            max-width: 800px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .form-card::before {
+            content: "";
+            position: absolute;
+            top: -40px;
+            left: 0;
+            width: 100%;
+            height: 80px;
+            background: #fefcf8;
+            border-radius: 50% 50% 0 0;
+        }
+
+        .form-title {
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #1e1e2f;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .form-label {
+            font-weight: 600;
+            color: #333;
+        }
+
+        .form-control {
+            border-radius: 1rem;
+            padding: 1rem 1.5rem;
+            font-size: 1.2rem;
+            border: 1px solid #ccc;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #00a8ff;
+            box-shadow: 0 0 0 0.2rem rgba(0, 168, 255, 0.25);
+        }
+
+        .form-note {
+            font-size: 0.9rem;
+            color: #777;
+        }
+
+        .btn-primary {
+            background-color: #00a8ff;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #007bb5;
+        }
+
+        .btn, .btn-secondary, .btn-danger, .btn-success {
+            border-radius: 1.5rem;
+            padding: 0.8rem 2rem;
+            font-weight: 600;
+        }
+
+        .btn-secondary {
+            color: #007bb5;
+            border-color: #007bb5;
+        }
+
+        .btn-secondary:hover {
+            background-color: #007bb5;
+            color: #fff;
+        }
+
+        .btn-success {
+            background-color: #90ee90;
+            color: white;
+            border: none;
+        }
+
+        .btn-success:hover {
+            background-color: #76c7b7;
+        }
+
+        .btn-danger {
+            background-color: #e74c3c;
+            border: none;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+        }
+
+        .input-icon input, .input-icon textarea {
+            padding-left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="row">
+        <div class="col-2">
+            <header th:replace="~{fragments/sidebar::sidebar}"></header>
+    
+        </div>
+        <div class="col-10 ">
+    
+<div class="container-fluid">
+    <div class="row justify-content-center align-items-center" style="min-height: 100vh;">
+        <div class="col-lg-7 col-md-8 col-sm-12">
+            <div class="main-wrapper">
+                <div class="form-card">
+                    <div class="form-title" th:text="${category.id == null ? 'Add Category' : 'Edit Category'}"></div>
+
+                    <form th:action="@{/categories/save}" th:object="${category}" method="post">
+                        <input type="hidden" th:field="*{id}"/>
+
+                        <div class="mb-3">
+                            <label for="name" class="form-label">Category Name</label>
+                            <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Enter category name" pattern="^[A-Za-z\s]{3,50}$" title="Only letters and spaces allowed, 3-50 characters" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="description" class="form-label">Description</label>
+                            <textarea id="description" th:field="*{description}" class="form-control" placeholder="Enter category description" rows="4" minlength="10" maxlength="200" required></textarea>
+                            <div class="form-note">Min 10 and Max 200 characters.</div>
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-4">
+                            <button type="submit" class="btn btn-success btn-lg">Done</button>
+                            <a th:href="@{/categories}" class="btn btn-danger btn-lg">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

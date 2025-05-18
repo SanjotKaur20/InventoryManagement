@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            background: url('/image/agc1.png') no-repeat center center fixed;
+            background-size: cover;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(10px);
+            z-index: 1;
+        }
+        .signup-container {
+    position: relative;
+    z-index: 2;
+    background: rgba(32, 32, 32, 0.404);
+    border-radius: 15px;
+    backdrop-filter: blur(15px);
+    width: 100%; /* Ensures it doesn't exceed parent */
+    max-width: 400px; /* Restricts the width */
+    box-shadow: 0px 0px 20px rgba(255, 255, 255, 0.2);
+    padding: 20px; /* Adjusts spacing */
+}
+        .signup-container h3 {
+            color: #fdfdfd;
+            font-weight: bold;
+        }
+        .form-label {
+            color: #ffffff;
+            font-weight: 500;
+        }
+        .form-control {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: #ffffff;
+        }
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.7);
+        }
+        .btn-custom {
+            background-color: #1a75c0;
+            color: white;
+            font-weight: bold;
+        }
+        .btn-custom:hover {
+            background-color: #14699a;
+        }
+        .text-light a {
+            color: #14699a;
+            font-weight: bold;
+        }
+        .text-light a:hover {
+            color: #111111;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="signup-container  text-center  ">
+                    <h3>Sign Up</h3>
+                    <img th:src="@{/image/logo-removebg-preview.png}" height="90px" style="margin-top: 20px; margin-bottom: 20px;">
+                    <form th:action="@{/signup}" method="post" th:object="${user}">
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}"/>
+
+
+                        <div class="mb-3 text-start">
+                            <label class="form-label">Email</label>
+                            <input type="email" class="form-control" th:field="*{email}" placeholder="Enter your email" required>
+                        </div>
+
+                        <div class="mb-3 text-start">
+                            <label class="form-label">Password</label>
+                            <input type="password" class="form-control" th:field="*{password}" placeholder="Enter your password" required>
+                        </div>
+                        <div th:if="${errorMessage}" style="color: red;">
+                            <p th:text="${errorMessage}"></p>
+                        </div>
+                        <div class="mb-3 text-start">
+                            <label class="form-label">Department:</label>
+                            <select name="departmentId" id="department" class="form-control" required>
+                                <option th:each="dept : ${departments}" th:value="${dept.id}" th:text="${dept.name}"></option>
+                            </select><br/><br/>
+                    
+                        </div>
+                    
+
+                        <button type="submit" class="btn btn-custom w-100 mb-3">Sign Up</button>
+                        <p class="text-center text-light">
+                            Already have an account? <a style="text-decoration: none;" th:href="@{/LoginPage}">Login</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
